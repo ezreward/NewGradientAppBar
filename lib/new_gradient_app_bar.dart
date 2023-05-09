@@ -179,6 +179,7 @@ class NewGradientAppBar extends StatefulWidget implements PreferredSizeWidget {
     this.textTheme,
     this.primary = true,
     this.centerTitle,
+    this.customLeadingWidth,
     this.titleSpacing = NavigationToolbar.kMiddleSpacing,
     this.toolbarOpacity = 1.0,
     this.bottomOpacity = 1.0,
@@ -227,6 +228,9 @@ class NewGradientAppBar extends StatefulWidget implements PreferredSizeWidget {
   ///  * [Scaffold.appBar], in which an [NewGradientAppBar] is usually placed.
   ///  * [Scaffold.drawer], in which the [Drawer] is usually placed.
   final Widget? leading;
+
+  /// Custom leading width
+  final double? customLeadingWidth;
 
   /// Controls whether we should try to imply the leading widget if null.
   ///
@@ -456,7 +460,9 @@ class _NewGradientAppBarState extends State<NewGradientAppBar> {
     }
     if (leading != null) {
       leading = ConstrainedBox(
-        constraints: const BoxConstraints.tightFor(width: _kLeadingWidth),
+        constraints: widget.customLeadingWidth != null
+            ? BoxConstraints(maxWidth: widget.customLeadingWidth!)
+            : const BoxConstraints.tightFor(width: _kLeadingWidth),
         child: leading,
       );
     }
@@ -679,7 +685,7 @@ class _SliverGradientAppBarDelegate extends SliverPersistentHeaderDelegate {
     required this.pinned,
     required this.snapConfiguration,
     required this.shape,
-  })   : assert(primary || topPadding == 0.0),
+  })  : assert(primary || topPadding == 0.0),
         _bottomHeight = bottom.preferredSize.height;
 
   final Widget leading;
