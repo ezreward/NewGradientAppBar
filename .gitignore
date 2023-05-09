@@ -4,6 +4,8 @@
 .packages
 .pub/
 
+.fvm/flutter_sdk/
+
 build/
 ios/.generated/
 ios/Flutter/Generated.xcconfig
